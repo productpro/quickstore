@@ -18,7 +18,7 @@ export async function createContext(opts: CreateExpressContextOptions): Promise<
       if (supabaseUser) {
         const metadata = supabaseUser.user_metadata ?? {};
         const name = String(metadata.full_name || metadata.name || supabaseUser.email?.split("@")[0] || "Merchant");
-        await db.upsertUser({ openId: supabaseUser.id, name, email: supabaseUser.email ?? null, loginMethod: "google", lastSignedIn: new Date() });
+        await db.upsertUser({ openId: supabaseUser.id, name, email: supabaseUser.email ?? null, loginMethod: "email", lastSignedIn: new Date() });
         user = (await db.getUserByOpenId(supabaseUser.id)) ?? null;
       }
     } catch (error) {
