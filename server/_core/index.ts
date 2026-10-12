@@ -2,8 +2,8 @@ import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
 import { publicPlatformScript } from "./publicConfig";
+import { ENV } from "./env";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -18,7 +18,13 @@ async function startServer() {
   app.get("/api/platform/config.js", (_req, res) => {
     res.set("Cache-Control", "no-store").type("application/javascript").send(publicPlatformScript());
   });
-  registerOAuthRoutes(app);
+  app.get("/api/auth/config", (_req, res) => {
+    if (!ENV.supabaseUrl || !ENV.supabaseAnonKey) {
+      res.status(503).json({ error: "Supabase authentication is not configured." });
+      return;
+    }
+    res.set("Cache-Control", "no-store").json({ url: ENV.supabaseUrl, anonKey: ENV.supabaseAnonKey });
+  });
   // tRPC API
   app.use(
     "/api/trpc",

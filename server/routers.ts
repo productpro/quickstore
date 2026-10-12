@@ -2,9 +2,7 @@ import { z } from "zod";
 import { createProduct, deleteProduct, ensureStoreForUser, getProductForOwner, getStoreBySlug, getStoreForOwner, listProducts, updateProduct, updateStoreForOwner } from "./db";
 import { storagePut } from "./storage";
 import { systemRouter } from "./_core/systemRouter";
-import { getSessionCookieOptions } from "./_core/cookies";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { COOKIE_NAME } from "@shared/const";
 import { TRPCError } from "@trpc/server";
 
 const slugInput = z.object({ slug: z.string().min(1).max(120) });
@@ -13,7 +11,7 @@ export const appRouter = router({
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
-    logout: publicProcedure.mutation(({ ctx }) => { const cookieOptions = getSessionCookieOptions(ctx.req); ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 }); return { success: true } as const; }),
+    logout: publicProcedure.mutation(() => ({ success: true } as const)),
   }),
   catalog: router({
     get: publicProcedure.input(slugInput).query(async ({ input }) => {

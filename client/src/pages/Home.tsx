@@ -31,7 +31,7 @@ export default function Home() {
             <h1>Turn your WhatsApp into a <span className="text-blue">high-converting storefront.</span></h1>
             <p className="hero-lede">Create a mobile-optimized store in minutes. Showcase products in naira, let customers build a cart, and receive pristine, structured order payloads straight on WhatsApp.</p>
             <div className="hero-actions">
-              <button onClick={startLogin} className="button button-blue button-lg">Create your merchant account <ArrowRight size={17} /></button>
+              <button onClick={startLogin} className="button button-blue button-lg">Continue with Google <ArrowRight size={17} /></button>
               <Link href="/dashboard" className="button button-white button-lg">Open my dashboard</Link>
             </div>
             <div className="trust-row"><Check size={15} /> No upfront payment gateway fees <Check size={15} /> Instant WhatsApp order redirect</div>
@@ -72,7 +72,7 @@ export default function Home() {
           <div className="steps-grid">{steps.map(step => <div key={step.number} className="step-card"><span className="step-number">{step.number}</span><h3>{step.title}</h3><p>{step.copy}</p></div>)}</div>
         </section>
 
-        <section className="cta-section"><div><Sparkles size={20} /><h2>Your next sale is<br />one link away.</h2></div><button onClick={startLogin} className="button button-dark button-lg">Create my storefront <ArrowRight size={17} /></button></section>
+        <section className="cta-section"><div><Sparkles size={20} /><h2>Your next sale is<br />one link away.</h2></div><button onClick={startLogin} className="button button-dark button-lg">Continue with Google <ArrowRight size={17} /></button></section>
       </main>
       <footer className="site-footer"><span>© 2026 QuickStore</span><span>Mobile-first commerce for ambitious merchants.</span><span>Made for WhatsApp selling.</span></footer>
     </div>
